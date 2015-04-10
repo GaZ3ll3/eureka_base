@@ -79,4 +79,11 @@ void Functions::fibonacci_nth(Int &r, int64_t n){
 	mpz_fib_ui (r.get_mpz_t(), n);
 }
 
+void Functions::modulo(std::vector<Int>&v, int64_t p){
+	for(auto it = v.begin(); it!=v.end(); it++){(*it) %= p;}
+}
+void Functions::modulo(std::vector<Int>&v, Int& a){
+	for(auto it = v.begin(); it!=v.end(); it++){(*it) %= a;}
+}
+
 } /* namespace Eukera */

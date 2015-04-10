@@ -8,12 +8,15 @@
 #ifndef LINEARRECURRENCE_H_
 #define LINEARRECURRENCE_H_
 
-namespace Eukera {
+#include "utils.h"
+#include <Eigen/Dense>
+
+namespace Eureka {
 
 class LinearRecurrence {
 public:
-	LinearRecurrence();
-	virtual ~LinearRecurrence();
+	std::vector<Int> FindLinearRecurrence(std::vector<Int>&);
+	std::vector<Int> BuildLinearRecurrence(std::vector<Int>&, std::vector<Int>&);
 };
 
 } /* namespace Eukera */

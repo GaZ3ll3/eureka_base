@@ -31,8 +31,9 @@ public:
 	// Fibonacci related
 	std::vector<Int> fibonacci_seq(int64_t);
 	void fibonacci_nth(Int &r, int64_t);
-	// Modulo used on containers
-	// todo:
+	// modulo
+	void modulo(std::vector<Int>&, int64_t);
+	void modulo(std::vector<Int>&, Int&);
 };
 
 } /* namespace Eukera */
