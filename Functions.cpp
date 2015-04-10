@@ -12,7 +12,9 @@ namespace Eureka {
 void Functions::pow(Int& r, Int& a, Int& b, Int& m){
 	mpz_powm(r.get_mpz_t(), a.get_mpz_t(), b.get_mpz_t(), m.get_mpz_t());
 }
-
+/*
+ * TODO: implement negative power
+ */
 //wrap for uint64_t modulo
 void Functions::pow(Int& r, Int& a, Int& b, uint64_t m){
 	Int tmp(m);

@@ -15,6 +15,7 @@ namespace Eureka {
 class Palindrome {
 public:
 	bool isPalindrome(int64_t);
+	bool isPalindrome(Int&);
 	bool isPalindrome(std::string);
 };
 
