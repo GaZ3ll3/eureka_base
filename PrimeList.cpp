@@ -1,11 +1,13 @@
 /*
- * libeureka.cpp
+ * PrimeList.cpp
  *
- *  Created on: Apr 3, 2015
+ *  Created on: Apr 9, 2015
  *      Author: lurker
  */
 
-#include "eureka.h"
+#include "PrimeList.h"
+
+namespace Eureka {
 
 PrimeList::PrimeList(int64_t limit, int cache){
 
@@ -18,6 +20,7 @@ PrimeList::PrimeList(int64_t limit, int cache){
 }
 
 PrimeList::~PrimeList(){
+	Primes.clear();
 
 }
 
@@ -90,7 +93,7 @@ int64_t PrimeList::isPrime(int64_t number){
 	return Primes[number].first;
 }
 
-int64_t PrimeList::getPrime(int index){
+int64_t PrimeList::getPrime(int64_t index){
 
 	if (index == 1) {
 		return 2;
@@ -132,39 +135,90 @@ int64_t PrimeList::getPrime(int index){
 	}
 }
 
-Functions::Functions(int64_t limit, int cache){
-
+// include itself.
+int64_t PrimeList::Pi(int64_t limit){
+	if (limit > _limit) {return -1;}
+	if (!(limit & 1)) {return Primes[limit - 1].second;}
+	return Primes[limit].second;
 }
 
-void Functions::assign(Int& r, Int& a){
-	mpz_set(r.get_mpz_t(), a.get_mpz_t());
+std::vector<std::pair<int64_t, int64_t>> PrimeList::factorize(int64_t n){
+	std::vector<std::pair<int64_t, int64_t>> factors;
+
+	auto tmp = n; auto limit = (int64_t)sqrt(tmp);
+	int64_t count = 0;
+
+	if (limit <= _limit){
+		for (int64_t pl_it = 0; pl_it < limit; pl_it ++){
+			if (1 == isPrime(pl_it) && tmp % pl_it == 0){
+				count = 0;
+				while (tmp % pl_it == 0){
+					tmp /= pl_it;
+					count += 1;
+				}
+				factors.push_back(std::make_pair(pl_it, count));
+			}
+		}
+		if (tmp > 1){
+			factors.push_back(std::make_pair(tmp, 1));
+		}
+	}
+	else{
+		std::cout << "Prime List not long enough." << std::endl;
+	}
+	return std::move(factors);
 }
 
-void Functions::assign(Int& r, uint64_t a){
-	mpz_set_ui(r.get_mpz_t(), a);
+int64_t PrimeList::divisor(int64_t n){
+	auto tmp = n; auto limit = (int64_t)sqrt(tmp);
+	int64_t count = 0, base = 1;
+
+	if (limit <= _limit){
+		for (int64_t pl_it = 0; pl_it < limit; pl_it ++){
+			if (1 == isPrime(pl_it) && tmp % pl_it == 0){
+				count = 0;
+				while (tmp % pl_it == 0){
+					tmp /= pl_it;
+					count += 1;
+				}
+				base *= (count + 1);
+			}
+		}
+		if (tmp > 1){
+			base *= 2;
+		}
+	}
+	else{
+		std::cout << "Prime List not long enough." << std::endl;
+	}
+	return base;
+}
+// not including itself.
+int64_t PrimeList::divisor_sum(int64_t n){
+	auto tmp = n; auto limit = (int64_t)sqrt(tmp);
+	int64_t count = 0, base = 1;
+
+	if (limit <= _limit){
+		for (int64_t pl_it = 0; pl_it < limit; pl_it ++){
+			if (1 == isPrime(pl_it) && tmp % pl_it == 0){
+				count = 0;
+				while (tmp % pl_it == 0){
+					tmp /= pl_it;
+					count += 1;
+				}
+				base *= (pow(pl_it, (count + 1))  - 1)/(pl_it - 1);
+			}
+		}
+		if (tmp > 1){
+			base *= (1 + tmp);
+		}
+	}
+	else{
+		std::cout << "Prime List not long enough." << std::endl;
+	}
+	return base - n;
 }
 
-void Functions::pow(Int& r, Int& a, Int& b, Int& m){
-	mpz_powm(r.get_mpz_t(), a.get_mpz_t(), b.get_mpz_t(), m.get_mpz_t());
-}
 
-void Functions::pow(Int& r, Int& a, uint64_t b){
-	mpz_pow_ui(r.get_mpz_t(), a.get_mpz_t(), b);
-}
 
-void Functions::pow(Int& r, uint64_t a, uint64_t b){
-	mpz_ui_pow_ui(r.get_mpz_t(), a, b);
-}
-
-void Functions::fac(Int& r, uint64_t a){
-	mpz_fac_ui(r.get_mpz_t(), a);
-}
-
-void Functions::gcd(Int& r, Int& a, Int& b){
-	mpz_gcd(r.get_mpz_t(), a.get_mpz_t(), b.get_mpz_t());
-}
-
-void Functions::lcm(Int& r, Int& a, Int& b){
-	mpz_lcm(r.get_mpz_t(), a.get_mpz_t(), b.get_mpz_t());
-}
-
+} /* namespace Eukera */
