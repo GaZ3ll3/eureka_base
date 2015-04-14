@@ -9,13 +9,12 @@
 #define LINEARRECURRENCE_H_
 
 #include "utils.h"
-#include <Eigen/Dense>
 
 namespace Eureka {
 
 class LinearRecurrence {
 public:
-	std::vector<Int> FindLinearRecurrence(std::vector<Int>&);
+	std::vector<Rational> FindLinearRecurrence(std::vector<Int>&);
 	std::vector<Int> BuildLinearRecurrence(std::vector<Int>&, std::vector<Int>&);
 };
 
