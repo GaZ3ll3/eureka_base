@@ -17,7 +17,6 @@ std::vector<Rational> LinearRecurrence::FindLinearRecurrence(std::vector<Int>& s
 	bool success = false;
 
 	for (int64_t length = 1; length <= list_len/2; length ++){
-		std::cout << "length is being : " << length << std::endl;
 		Matrix m(length, length);
 		for (int64_t row = 0; row < length; row++){
 			for (int64_t col = 0; col < length; col++){
@@ -34,7 +33,7 @@ std::vector<Rational> LinearRecurrence::FindLinearRecurrence(std::vector<Int>& s
 
 
 		for (int64_t row = 2 * length; row < list_len; row ++){
-			Rational tmp(0_mpq);
+			Rational tmp(Rational(0));
 			for(int64_t i = 0; i < length; i++) {
 				Rational k = t.get(i, 0);
 				tmp += k * Rational(seq[row - length + i]);

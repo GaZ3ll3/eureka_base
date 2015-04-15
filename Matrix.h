@@ -10,7 +10,6 @@
 
 #include "utils.h"
 #include <valarray>
-#include <deque>
 
 namespace Eureka {
 

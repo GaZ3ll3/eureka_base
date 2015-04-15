@@ -24,7 +24,7 @@ Matrix::~Matrix() {
 
 void Matrix::ldivide(Matrix& v){
 	if (this->row != this->col || this->row != v.row) {
-		std::cout << "Dimension does not match.\n" << std::endl;
+//		std::cout << "Dimension does not match.\n" << std::endl;
 		return;
 	}
 	else{
@@ -32,9 +32,6 @@ void Matrix::ldivide(Matrix& v){
 		// operations are working on rational numbers.
 		// cancelling must be exact.
 		// The goal is form a diagonal matrix of BigInt.
-
-		//Pivoting
-		std::deque<std::pair<int64_t, int64_t>> pivot;
 
 		for (int64_t i = 0; i < this->col; i++){
 			/*
@@ -52,7 +49,7 @@ void Matrix::ldivide(Matrix& v){
 			 * 2. if maximum on i-th column is 0, singular.
 			 */
 			if (this->get(i_max, i) == 0){
-				std::cout << "Singular detected.\n" << std::endl;
+//				std::cout << "Singular detected." << std::endl;
 				return;
 			}
 
@@ -70,7 +67,6 @@ void Matrix::ldivide(Matrix& v){
 				v.data[i] = v.data[i_max];
 				v.data[i_max] = swp;
 
-				pivot.push_back(std::make_pair(i, i_max));
 			}
 			/*
 			 * 4. Eliminate to upper triangle
@@ -80,7 +76,7 @@ void Matrix::ldivide(Matrix& v){
 					this->data[l * this->col + ll] -= this->get(i, ll) * (this->get(l, i)/this->get(i,i));
 				}
 				v.data[l] = v.data[l] - v.data[i] * (this->get(l, i)/this->get(i,i));
-				this->set(l, i, 0_mpq);
+				this->set(l, i, Rational(0));
 			}
 		}
 
@@ -94,16 +90,6 @@ void Matrix::ldivide(Matrix& v){
 			}
 			v.data[j] = s/this->get(j,j);
 		}
-
-		/*
-		 * use pivot to restore values to correct position
-		 */
-//		while (!pivot.empty()){
-//			auto it = pivot.back();
-//			swap(v.data[it.first], v.data[it.second]);
-//			pivot.pop_back();
-//		}
-
 	}
 }
 
